@@ -1,0 +1,15 @@
+[
+  {
+    "name": "Apache",
+    "image": "httpd:latest",
+    "cpu": 30,
+    "memory": 256,
+    "essential": true,
+    "portMappings": [
+      {
+        "containerPort": 80,
+        "hostPort": 80
+      }
+    ]
+  }
+]

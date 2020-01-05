@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 #=================================S3 backend====================================
-/*
+
 terraform {
   backend "s3" {
     bucket = "aws.backend.test123123321" // Bucket where to SAVE Terraform State
@@ -11,7 +11,7 @@ terraform {
     region = "us-west-2"                 // Region where bycket created
   }
 }
-*/
+
 #======================================VPC======================================
 
 module "SG" {

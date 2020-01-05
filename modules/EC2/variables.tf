@@ -37,3 +37,7 @@ variable "asg_min_size" {
 variable "asg_desired_capacity" {
   default = ""
 }
+
+variable "env" {
+  default = ""
+}

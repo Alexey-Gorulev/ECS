@@ -5,3 +5,7 @@ variable "allow_ports" {
 variable "vpc_id" {
   default = ""
 }
+
+variable "env" {
+  default = ""
+}

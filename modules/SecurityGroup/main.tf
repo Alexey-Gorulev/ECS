@@ -1,5 +1,5 @@
-resource "aws_security_group" "test" {
-  name   = "Test Security Group"
+resource "aws_security_group" "project" {
+  name   = "${var.env} Security Group"
   vpc_id = "${var.vpc_id}"
 
   dynamic "ingress" {
@@ -20,6 +20,6 @@ resource "aws_security_group" "test" {
   }
 
   tags = {
-    Name = "Test SecurityGroup"
+    Name = "${var.env} SecurityGroup"
   }
 }

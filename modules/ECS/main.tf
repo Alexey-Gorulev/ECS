@@ -1,11 +1,11 @@
-resource "aws_ecs_cluster" "test" {
+resource "aws_ecs_cluster" "project" {
   name = "ecs-cluster"
 }
 
-resource "aws_ecs_service" "test" {
-  name            = "ecs-service"
-  cluster         = aws_ecs_cluster.test.id
-  task_definition = aws_ecs_task_definition.test.arn
+resource "aws_ecs_service" "project" {
+  name            = "ecs-service-${var.env}"
+  cluster         = aws_ecs_cluster.project.id
+  task_definition = aws_ecs_task_definition.project.arn
   desired_count   = "${var.count_container}"
 
   load_balancer {
@@ -23,7 +23,7 @@ resource "aws_ecs_service" "test" {
   ]
 }
 
-resource "aws_ecs_task_definition" "test" {
+resource "aws_ecs_task_definition" "project" {
   family                = "service"
   container_definitions = file("./task-definitions/service.json")
 

@@ -21,3 +21,7 @@ variable "lb" {
 variable "public_subnet_names" {
   default = ""
 }
+
+variable "env" {
+  default = ""
+}

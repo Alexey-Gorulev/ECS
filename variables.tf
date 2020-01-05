@@ -1,33 +1,43 @@
+#=====Security Group
+
 variable "allow_ports" {
-  value = ["80", "22"]
+  default = ["80", "22"]
 }
 
+#=====Network
+
 variable "vpc_cidr" {
-  value = "10.0.0.0/16"
+  default = "10.0.0.0/16"
 }
 
 variable "public_subnet_cidrs" {
-  value = ["10.0.0.0/24", "10.0.1.0/24"]
+  default = ["10.0.0.0/24", "10.0.1.0/24"]
 }
-
+/*
+variable "private_subnet_cidrs" {
+  default = ["10.0.2.0/24", "10.0.3.0/24"]
+}
+*/
 variable "type_instance" {
-  value = "t2.micro"
+  default = "t2.micro"
 }
 
-variable key "" {
-  value = "Oregon-DevOps-Lab"
+variable "key" {
+  default = "Oregon-DevOps-Lab"
 }
+
+#=====ECS
 
 variable "count_container" {
-  value = "1"
+  default = "1"
 }
 
 variable "name_container" {
-  value = "Apache"
+  default = "Apache"
 }
 
 variable "port_container" {
-  value = "80"
+  default = "80"
 }
 
 variable "asg_max_size" {
@@ -40,4 +50,41 @@ variable "asg_min_size" {
 
 variable "asg_desired_capacity" {
   default = "1"
+}
+
+#=====RDS
+
+variable "allocated_storage" {
+  default = "20"
+}
+
+variable "engine" {
+  default = "mysql"
+}
+
+variable "engine_version" {
+  default = "8.0.16"
+}
+
+variable "instance_class" {
+  default = "db.t2.micro"
+}
+
+variable "username" {
+  default = "superuser"
+}
+
+variable "backup_retention_period" {
+  default = "0"
+}
+
+variable "rds_pswd_keeper" {
+  description = "Password keeper"
+  default     = "owner"
+}
+
+#=====Environment
+
+variable "env" {
+  default = "test"
 }

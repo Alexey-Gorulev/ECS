@@ -6,9 +6,9 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket = "aws.backend.test123123321" // Bucket where to SAVE Terraform State
+    bucket = "aws-backend-test123123321" // Bucket where to SAVE Terraform State
     key    = "test/terraform.tfstate"    // Object name in the bucket to SAVE Terraform State
-    region = "us-west-2"                 // Region where bycket created
+    region = "eu-central-1"              // Region where bycket created
   }
 }
 

@@ -9,7 +9,9 @@ resource "aws_vpc" "project" {
   instance_tenancy = "default"
 
   tags = {
-    Name = "${var.env}-vps"
+    Environment = "${var.env}_vps"
+    Project     = "${var.project}_vps"
+    Sub_project = "${var.sub_project}_vps"
   }
 }
 
@@ -17,7 +19,9 @@ resource "aws_internet_gateway" "project" {
   vpc_id = aws_vpc.project.id
 
   tags = {
-    Name = "${var.env}-ig"
+    Environment = "${var.env}_ig"
+    Project     = "${var.project}_ig"
+    Sub_project = "${var.sub_project}_ig"
   }
 }
 
@@ -31,7 +35,9 @@ resource "aws_subnet" "public_subnets" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "${var.env}-public-subnet-${count.index + 1}"
+    Environment = "${var.env}-public-subnet-${count.index + 1}"
+    Project     = "${var.project}-public-subnet-${count.index + 1}"
+    Sub_project = "${var.sub_project}-public-subnet-${count.index + 1}"
   }
 }
 
@@ -44,7 +50,9 @@ resource "aws_route_table" "project" {
   }
 
   tags = {
-    Name = "${var.env}-public-rt"
+    Environment = "${var.env}_public_rt"
+    Project     = "${var.project}_public_rt"
+    Sub_project = "${var.sub_project}_public_rt"
   }
 }
 
@@ -63,7 +71,9 @@ resource "aws_subnet" "private_subnets" {
   availability_zone       = data.aws_availability_zones.az.names[count.index]
 
   tags = {
-    Name = "${var.env}-private-subnet-${count.index + 1}"
+    Environment = "${var.env}-private-subnet-${count.index + 1}"
+    Project     = "${var.project}-private-subnet-${count.index + 1}"
+    Sub_project = "${var.sub_project}-private-subnet-${count.index + 1}"
   }
 }
 
@@ -76,7 +86,9 @@ resource "aws_route_table" "project" {
   }
 
   tags = {
-    Name = "${var.env}-private-rt"
+    Environment = "${var.env}_private_rt"
+    Project     = "${var.project}_private_rt"
+Sub_project = "${var.sub_project}_private_rt"
   }
 }
 

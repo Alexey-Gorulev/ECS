@@ -1,3 +1,7 @@
+variable "region" {
+  default = "us-west-2"
+}
+
 #=====Security Group
 
 variable "allow_ports" {
@@ -41,7 +45,7 @@ variable "port_container" {
 }
 
 variable "asg_max_size" {
-  default = "1"
+  default = "3"
 }
 
 variable "asg_min_size" {
@@ -74,6 +78,10 @@ variable "username" {
   default = "superuser"
 }
 
+variable "db_allow_port" {
+  default = "3306"
+}
+
 variable "backup_retention_period" {
   default = "0"
 }
@@ -83,8 +91,16 @@ variable "rds_pswd_keeper" {
   default     = "owner"
 }
 
-#=====Environment
+#=====Tags
 
 variable "env" {
   default = "test"
+}
+
+variable "project" {
+  default = "test_projet"
+}
+
+variable "sub_project" {
+  default = "test_sub_projet"
 }

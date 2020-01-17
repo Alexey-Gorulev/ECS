@@ -1,30 +1,30 @@
 variable "allocated_storage" {
-  default = "20"
+  default = ""
 }
 
 variable "engine" {
-  default = "mysql"
+  default = ""
 }
 
 variable "engine_version" {
-  default = "8.0.16"
+  default = ""
 }
 
 variable "instance_class" {
-  default = "db.t2.micro"
+  default = ""
 }
 
 variable "username" {
-  default = "superuser"
+  default = ""
 }
 
 variable "backup_retention_period" {
-  default = "0"
+  default = ""
 }
 
 variable "rds_pswd_keeper" {
   description = "Password keeper"
-  default     = "owner"
+  default     = ""
 }
 
 variable "public_subnet_ids" {
@@ -35,6 +35,18 @@ variable "vpc_id" {
   default = ""
 }
 
+variable "db_allow_port" {
+  default = ""
+}
+
 variable "env" {
-  default = "test"
+  default = ""
+}
+
+variable "project" {
+  default = ""
+}
+
+variable "sub_project" {
+  default = ""
 }

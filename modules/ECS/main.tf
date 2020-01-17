@@ -1,9 +1,19 @@
+locals {
+  env_project = "${var.environment}_${var.project}"
+}
+
 resource "aws_ecs_cluster" "project" {
   name = "ecs-cluster"
+
+  tags = {
+    Environment = "${var.env}_ecs_cluster"
+    Project     = "${var.project}_ecs_cluster"
+    Sub_project = "${var.sub_project}_ecs_cluster"
+  }
 }
 
 resource "aws_ecs_service" "project" {
-  name            = "ecs-service-${var.env}"
+  name            = "ecs_service_${var.locals.env_project}"
   cluster         = aws_ecs_cluster.project.id
   task_definition = aws_ecs_task_definition.project.arn
   desired_count   = "${var.count_container}"
@@ -21,6 +31,12 @@ resource "aws_ecs_service" "project" {
   depends_on = [
     var.lb,
   ]
+
+  tags = {
+    Environment = "${var.env}_ecs_service"
+    Project     = "${var.project}_ecs_service"
+    Sub_project = "${var.sub_project}_ecs_service"
+  }
 }
 
 resource "aws_ecs_task_definition" "project" {
@@ -35,5 +51,11 @@ resource "aws_ecs_task_definition" "project" {
   placement_constraints {
     type       = "memberOf"
     expression = "attribute:ecs.availability-zone in [${var.public_subnet_names}]"
+  }
+
+  tags = {
+    Environment = "${var.env}_ecs_task_definition"
+    Project     = "${var.project}_ecs_task_definition"
+    Sub_project = "${var.sub_project}_ecs_task_definition"
   }
 }

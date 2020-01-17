@@ -1,20 +1,17 @@
-resource "aws_iam_role" "ecs_instance_role" {
-  name = "ecs_instance_role_${var.env}"
-
-  assume_role_policy = <<EOF
-{
-  "Version": "2008-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": ["ec2.amazonaws.com"]
-      },
-      "Effect": "Allow"
-    }
-  ]
+locals {
+  env_project = "${var.environment}_${var.project}"
 }
-EOF
+
+resource "aws_iam_role" "ecs_instance_role" {
+  name = "ecs_instance_role_${var.locals.env_project}"
+
+  assume_role_policy = file("./policy_data/policy_data.json")
+
+  tags = {
+    Environment = "${var.env}_iam_role"
+    Project     = "${var.project}_iam_role"
+    Sub_project = "${var.sub_project}_iam_role"
+  }
 }
 
 resource "aws_iam_instance_profile" "ecs" {

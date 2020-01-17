@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "us-west-2"
+  region = "${var.region}"
 }
 
 #=================================S3 backend====================================
@@ -19,6 +19,8 @@ module "SG" {
   vpc_id      = "${module.network.vpc_id}"
   allow_ports = "${var.allow_ports}"
   env         = "${var.env}"
+  project     = "${var.project}"
+  sub_project = "${var.sub_project}"
 }
 
 module "network" {
@@ -26,7 +28,9 @@ module "network" {
   vpc_cidr            = "${var.vpc_cidr}"
   public_subnet_cidrs = "${var.public_subnet_cidrs}"
   #private_subnet_cidrs = "${var.private_subnet_cidrs}"
-  env = "${var.env}"
+  env         = "${var.env}"
+  project     = "${var.project}"
+  sub_project = "${var.sub_project}"
 }
 
 module "EC2" {
@@ -42,11 +46,15 @@ module "EC2" {
   asg_desired_capacity = "${var.asg_desired_capacity}"
   key                  = "${var.key}"
   env                  = "${var.env}"
+  project              = "${var.project}"
+  sub_project          = "${var.sub_project}"
 }
 
 module "IAM_for_EC2" {
-  source = "./modules/IAM"
-  env    = "${var.env}"
+  source      = "./modules/IAM"
+  env         = "${var.env}"
+  project     = "${var.project}"
+  sub_project = "${var.sub_project}"
 }
 
 module "RDS" {
@@ -60,7 +68,10 @@ module "RDS" {
   rds_pswd_keeper         = "${var.rds_pswd_keeper}"
   backup_retention_period = "${var.backup_retention_period}"
   vpc_id                  = "${module.network.vpc_id}"
+  db_allow_port           = "${var.db_allow_port}"
   env                     = "${var.env}"
+  project                 = "${var.project}"
+  sub_project             = "${var.sub_project}"
 }
 
 module "ECS" {
@@ -72,4 +83,6 @@ module "ECS" {
   name_container      = "${var.name_container}"
   port_container      = "${var.port_container}"
   env                 = "${var.env}"
+  project             = "${var.project}"
+  sub_project         = "${var.sub_project}"
 }

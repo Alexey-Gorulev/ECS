@@ -13,3 +13,11 @@ variable "private_subnet_cidrs" {
 variable "env" {
   default = ""
 }
+
+variable "project" {
+  default = ""
+}
+
+variable "sub_project" {
+  default = ""
+}

@@ -1,3 +1,7 @@
+locals {
+  env_project = "${var.environment}_${var.project}"
+}
+
 // Generate Password
 resource "random_string" "generate_rds_password" {
   length           = 12
@@ -15,6 +19,12 @@ resource "aws_ssm_parameter" "rds_username" {
   description = "Master Username for RDS MySQL"
   type        = "String"
   value       = "${var.username}"
+
+  tags = {
+    Environment = "${var.env}_rds_username"
+    Project     = "${var.project}_rds_username"
+    Sub_project = "${var.sub_project}_rds_username"
+  }
 }
 
 resource "aws_ssm_parameter" "rds_password" {
@@ -22,6 +32,12 @@ resource "aws_ssm_parameter" "rds_password" {
   description = "Master Password for RDS MySQL"
   type        = "SecureString"
   value       = random_string.generate_rds_password.result
+
+  tags = {
+    Environment = "${var.env}_rds_password"
+    Project     = "${var.project}_rds_password"
+    Sub_project = "${var.sub_project}_rds_password"
+  }
 }
 
 #####
@@ -37,7 +53,7 @@ resource "aws_db_instance" "project" {
   allocated_storage = "${var.allocated_storage}"
   storage_encrypted = false
 
-  name     = "${var.env}"
+  name     = locals.env_project
   username = "${var.username}"
   password = random_string.generate_rds_password.result
 
@@ -50,8 +66,9 @@ resource "aws_db_instance" "project" {
   backup_retention_period = "${var.backup_retention_period}"
 
   tags = {
-    Owner       = "user"
-    Environment = "${var.env}"
+    Environment = "${var.env}_db_instance"
+    Project     = "${var.project}_db_instance"
+    Sub_project = "${var.sub_project}_db_instance"
   }
 
   # DB subnet group
@@ -69,17 +86,19 @@ resource "aws_db_subnet_group" "project" {
   subnet_ids = "${var.public_subnet_ids}"
 
   tags = {
-    Name = "${var.env}-db_subnet_group"
+    Environment = "${var.env}_db_subnet_group"
+    Project     = "${var.project}_db_subnet_group"
+    Sub_project = "${var.sub_project}_db_subnet_group"
   }
 }
 
 resource "aws_security_group" "project_rds_sg" {
-  name   = "${var.env} RDS Security Group"
+  name   = "${var.project} RDS Security Group"
   vpc_id = "${var.vpc_id}"
 
   ingress {
-    from_port   = 3306
-    to_port     = 3306
+    from_port   = db_allow_port
+    to_port     = db_allow_port
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -92,6 +111,8 @@ resource "aws_security_group" "project_rds_sg" {
   }
 
   tags = {
-    Name = "${var.env} RDS SecurityGroup"
+    Environment = "${var.env} RDS SecurityGroup"
+    Project     = "${var.project} RDS SecurityGroup"
+    Sub_project = "${var.sub_project} RDS SecurityGroup"
   }
 }

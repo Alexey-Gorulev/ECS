@@ -1,9 +1,5 @@
-locals {
-  env_project = "${var.environment}_${var.project}"
-}
-
 resource "aws_iam_role" "ecs_instance_role" {
-  name = "ecs_instance_role_${var.locals.env_project}"
+  name = "ecs_instance_role"
 
   assume_role_policy = file("./policy_data/policy_data.json")
 
@@ -15,7 +11,7 @@ resource "aws_iam_role" "ecs_instance_role" {
 }
 
 resource "aws_iam_instance_profile" "ecs" {
-  name = "ecs_instance_profile_${var.env}"
+  name = "ecs_instance_profile"
   role = "${aws_iam_role.ecs_instance_role.name}"
 }
 

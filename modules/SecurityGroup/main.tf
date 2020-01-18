@@ -1,9 +1,5 @@
-locals {
-  env_project = "${var.environment}_${var.project}"
-}
-
 resource "aws_security_group" "project" {
-  name   = locals.env_project
+  name   = "SG"
   vpc_id = "${var.vpc_id}"
 
   dynamic "ingress" {

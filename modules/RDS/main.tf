@@ -1,7 +1,3 @@
-locals {
-  env_project = "${var.environment}_${var.project}"
-}
-
 // Generate Password
 resource "random_string" "generate_rds_password" {
   length           = 12
@@ -15,7 +11,7 @@ resource "random_string" "generate_rds_password" {
 
 // Store Username & Password in SSM Parameter Store
 resource "aws_ssm_parameter" "rds_username" {
-  name        = "/${var.env}/mysql_username"
+  name        = "/${var.project}/mysql_username"
   description = "Master Username for RDS MySQL"
   type        = "String"
   value       = "${var.username}"
@@ -28,7 +24,7 @@ resource "aws_ssm_parameter" "rds_username" {
 }
 
 resource "aws_ssm_parameter" "rds_password" {
-  name        = "/${var.env}/mysql_pswd"
+  name        = "/${var.project}/mysql_pswd"
   description = "Master Password for RDS MySQL"
   type        = "SecureString"
   value       = random_string.generate_rds_password.result
@@ -53,7 +49,7 @@ resource "aws_db_instance" "project" {
   allocated_storage = "${var.allocated_storage}"
   storage_encrypted = false
 
-  name     = locals.env_project
+  name     = "db-instance"
   username = "${var.username}"
   password = random_string.generate_rds_password.result
 
@@ -97,8 +93,8 @@ resource "aws_security_group" "project_rds_sg" {
   vpc_id = "${var.vpc_id}"
 
   ingress {
-    from_port   = db_allow_port
-    to_port     = db_allow_port
+    from_port   = "${var.db_allow_port}"
+    to_port     = "${var.db_allow_port}"
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }

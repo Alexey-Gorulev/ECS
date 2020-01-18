@@ -1,7 +1,3 @@
-locals {
-  env_project = "${var.environment}_${var.project}"
-}
-
 resource "aws_ecs_cluster" "project" {
   name = "ecs-cluster"
 
@@ -13,7 +9,7 @@ resource "aws_ecs_cluster" "project" {
 }
 
 resource "aws_ecs_service" "project" {
-  name            = "ecs_service_${var.locals.env_project}"
+  name            = "ecs-service"
   cluster         = aws_ecs_cluster.project.id
   task_definition = aws_ecs_task_definition.project.arn
   desired_count   = "${var.count_container}"

@@ -72,9 +72,8 @@ resource "aws_db_instance" "project" {
 
   # Snapshot name upon DB deletion
   #final_snapshot_identifier = "${var.env}-db-server-snapshot"
-  /*
-  timezone = "Central Standard Time"
-*/
+
+  timezone = "Eastern Standard Time"
 }
 
 resource "aws_db_subnet_group" "project" {

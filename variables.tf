@@ -1,11 +1,11 @@
 variable "region" {
-  default = "us-west-2"
+  default = "us-east-1"
 }
 
 #=====Security Group
 
 variable "allow_ports" {
-  default = ["80", "22"]
+  default = ["80", "81", "82", "83", "84", "85", "22"]
 }
 
 #=====Network
@@ -23,11 +23,11 @@ variable "private_subnet_cidrs" {
 }
 */
 variable "type_instance" {
-  default = "t2.micro"
+  default = "t3.medium"
 }
 
 variable "key" {
-  default = "Oregon-DevOps-Lab"
+  default = "N.Virginia"
 }
 
 #=====ECS
@@ -44,8 +44,10 @@ variable "port_container" {
   default = "80"
 }
 
+#=====EC2
+
 variable "asg_max_size" {
-  default = "3"
+  default = "2"
 }
 
 variable "asg_min_size" {
@@ -67,7 +69,7 @@ variable "engine" {
 }
 
 variable "engine_version" {
-  default = "8.0.16"
+  default = "5.7"
 }
 
 variable "instance_class" {
@@ -75,7 +77,7 @@ variable "instance_class" {
 }
 
 variable "username" {
-  default = "superuser"
+  default = "dbadmin"
 }
 
 variable "db_allow_port" {
@@ -88,19 +90,19 @@ variable "backup_retention_period" {
 
 variable "rds_pswd_keeper" {
   description = "Password keeper"
-  default     = "owner"
+  default     = "dbadmin"
 }
 
 #=====Tags
 
 variable "env" {
-  default = "test"
+  default = "dev"
 }
 
 variable "project" {
-  default = "test_projet"
+  default = "ES436"
 }
 
 variable "sub_project" {
-  default = "test_sub_projet"
+  default = "commentator"
 }

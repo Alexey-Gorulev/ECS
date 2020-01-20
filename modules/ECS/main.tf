@@ -7,7 +7,7 @@ resource "aws_ecs_cluster" "project" {
     Sub_project = "${var.sub_project}_ecs_cluster"
   }
 }
-
+/*
 resource "aws_ecs_service" "project" {
   name            = "ecs-service"
   cluster         = aws_ecs_cluster.project.id
@@ -55,3 +55,4 @@ resource "aws_ecs_task_definition" "project" {
     Sub_project = "${var.sub_project}_ecs_task_definition"
   }
 }
+*/

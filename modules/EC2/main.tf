@@ -8,7 +8,7 @@ data "aws_ami" "latest_ami_for_ECS" {
 }
 
 resource "aws_autoscaling_group" "project" {
-  name                 = "asg"
+  name                 = "ASG"
   max_size             = "${var.asg_max_size}"
   min_size             = "${var.asg_min_size}"
   desired_capacity     = "${var.asg_desired_capacity}"
@@ -19,17 +19,17 @@ resource "aws_autoscaling_group" "project" {
   tags = [
     {
       key                 = "Environment"
-      value               = "${var.env}_asg"
+      value               = "${var.env}"
       propagate_at_launch = true
     },
     {
       key                 = "Project"
-      value               = "${var.project}_asg"
+      value               = "${var.project}"
       propagate_at_launch = true
     },
     {
       key                 = "Sub_project"
-      value               = "${var.sub_project}_asg"
+      value               = "${var.sub_project}"
       propagate_at_launch = true
     },
   ]
@@ -98,7 +98,7 @@ resource "aws_autoscaling_attachment" "project" {
 }
 
 resource "aws_launch_configuration" "project" {
-  name                 = "web_lc"
+  name                 = "${var.project}"
   image_id             = data.aws_ami.latest_ami_for_ECS.id
   instance_type        = "${var.type_instance}"
   security_groups      = ["${var.sg_id}"]
@@ -122,9 +122,9 @@ resource "aws_lb" "project" {
   subnets            = "${var.public_subnet_ids}"
 
   tags = {
-    Environment = "${var.env}_alb"
-    Project     = "${var.project}_alb"
-    Sub_project = "${var.sub_project}_alb"
+    Environment = "${var.env}"
+    Project     = "${var.project}"
+    Sub_project = "${var.sub_project}"
   }
 }
 

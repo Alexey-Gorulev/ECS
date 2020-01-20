@@ -1,17 +1,17 @@
 resource "aws_ecs_cluster" "project" {
-  name = "ecs-cluster"
+  name = "commentator-development"
 
   tags = {
-    Environment = "${var.env}_ecs_cluster"
-    Project     = "${var.project}_ecs_cluster"
-    Sub_project = "${var.sub_project}_ecs_cluster"
+    Environment = "${var.env}"
+    Project     = "${var.project}"
+    Sub_project = "${var.sub_project}"
   }
 }
-/*
+
 resource "aws_ecs_service" "project" {
   name            = "ecs-service"
-  cluster         = aws_ecs_cluster.project.id
-  task_definition = aws_ecs_task_definition.project.arn
+  cluster         = "${aws_ecs_cluster.project.id}"
+  task_definition = "${aws_ecs_task_definition.project.arn}"
   desired_count   = "${var.count_container}"
 
   load_balancer {
@@ -27,16 +27,17 @@ resource "aws_ecs_service" "project" {
   depends_on = [
     var.lb,
   ]
-
+  /*
   tags = {
-    Environment = "${var.env}_ecs_service"
-    Project     = "${var.project}_ecs_service"
-    Sub_project = "${var.sub_project}_ecs_service"
+    Environment = "${var.env}"
+    Project     = "${var.project}"
+    Sub_project = "${var.sub_project}"
   }
+*/
 }
 
 resource "aws_ecs_task_definition" "project" {
-  family                = "service"
+  family                = "task"
   container_definitions = file("./task-definitions/service.json")
 
   volume {
@@ -50,9 +51,8 @@ resource "aws_ecs_task_definition" "project" {
   }
 
   tags = {
-    Environment = "${var.env}_ecs_task_definition"
-    Project     = "${var.project}_ecs_task_definition"
-    Sub_project = "${var.sub_project}_ecs_task_definition"
+    Environment = "${var.env}"
+    Project     = "${var.project}"
+    Sub_project = "${var.sub_project}"
   }
 }
-*/

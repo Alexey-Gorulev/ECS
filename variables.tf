@@ -85,7 +85,7 @@ variable "db_allow_port" {
 }
 
 variable "backup_retention_period" {
-  default = "0"
+  default = "8"
 }
 
 variable "rds_pswd_keeper" {

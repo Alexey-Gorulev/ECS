@@ -4,9 +4,9 @@ resource "aws_iam_role" "ecs_instance_role" {
   assume_role_policy = file("./policy_data/policy_data.json")
 
   tags = {
-    Environment = "${var.env}_iam_role"
-    Project     = "${var.project}_iam_role"
-    Sub_project = "${var.sub_project}_iam_role"
+    Environment = "${var.env}"
+    Project     = "${var.project}"
+    Sub_project = "${var.sub_project}"
   }
 }
 

@@ -20,8 +20,8 @@ resource "aws_security_group" "project" {
   }
 
   tags = {
-    Environment = "${var.env} SecurityGroup"
-    Project     = "${var.project} SecurityGroup"
-    Sub_project = "${var.sub_project} SecurityGroup"
+    Environment = "${var.env}"
+    Project     = "${var.project}"
+    Sub_project = "${var.sub_project}"
   }
 }

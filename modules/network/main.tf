@@ -9,9 +9,9 @@ resource "aws_vpc" "project" {
   instance_tenancy = "default"
 
   tags = {
-    Environment = "${var.env}_vps"
-    Project     = "${var.project}_vps"
-    Sub_project = "${var.sub_project}_vps"
+    Environment = "${var.env}"
+    Project     = "${var.project}"
+    Sub_project = "${var.sub_project}"
   }
 }
 
@@ -19,9 +19,9 @@ resource "aws_internet_gateway" "project" {
   vpc_id = aws_vpc.project.id
 
   tags = {
-    Environment = "${var.env}_ig"
-    Project     = "${var.project}_ig"
-    Sub_project = "${var.sub_project}_ig"
+    Environment = "${var.env}"
+    Project     = "${var.project}"
+    Sub_project = "${var.sub_project}"
   }
 }
 
@@ -35,9 +35,9 @@ resource "aws_subnet" "public_subnets" {
   map_public_ip_on_launch = true
 
   tags = {
-    Environment = "${var.env}-public-subnet-${count.index + 1}"
-    Project     = "${var.project}-public-subnet-${count.index + 1}"
-    Sub_project = "${var.sub_project}-public-subnet-${count.index + 1}"
+    Environment = "${var.env}"
+    Project     = "${var.project}"
+    Sub_project = "${var.sub_project}"
   }
 }
 
@@ -50,9 +50,9 @@ resource "aws_route_table" "project" {
   }
 
   tags = {
-    Environment = "${var.env}_public_rt"
-    Project     = "${var.project}_public_rt"
-    Sub_project = "${var.sub_project}_public_rt"
+    Environment = "${var.env}"
+    Project     = "${var.project}"
+    Sub_project = "${var.sub_project}"
   }
 }
 

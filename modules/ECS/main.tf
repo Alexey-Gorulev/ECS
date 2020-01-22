@@ -13,13 +13,11 @@ resource "aws_ecs_service" "project" {
   cluster         = "${aws_ecs_cluster.project.id}"
   task_definition = "${aws_ecs_task_definition.project.arn}"
   desired_count   = "${var.count_container}"
-
+  /*
   deployment_controller {
     type = "CODE_DEPLOY"
   }
-
-
-
+*/
   load_balancer {
     target_group_arn = "${var.lb_arn}"
     container_name   = "${var.name_container}"
